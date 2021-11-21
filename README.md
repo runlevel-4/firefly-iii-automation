@@ -1,33 +1,13 @@
 # firefly-iii install
 This script assumes you are running a flavor of Linux that includes apt package manager.
 
-**NOTE FOR DEBIAN/RPi USERS:** You will have to add the third party _sury_ repo to get the php packages.
-
-`sudo apt update`
-
-`sudo apt install -y curl wget gnupg2 ca-certificates lsb-release apt-transport-https`
-
-`wget https://packages.sury.org/php/apt.gpg`
-
-`sudo apt-key add apt.gpg`
-
-`echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php7.list`
-
-`sudo apt update`
-
 ================================================
 
 At the terminal:
 
   1. If you don't have _git_ installed, just run `sudo apt install git`.
-  2. `sudo git clone https://github.com/runlevel-4/firefly-iii-automation`
+  2. `git clone https://github.com/runlevel-4/firefly-iii-automation`
   3. `cd firefly-iii-automation`
-
-**DO NOT** run the installer script as sudo or root.  Just run `sh installlampwithfirefly.sh`.
- 
- If you have permission issues when running the .sh script without sudo, then try this:
- 
- `chmod +x /path/to/your/filename.sh`
 
 ==========================================================
 
