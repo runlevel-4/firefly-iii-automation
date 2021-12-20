@@ -18,6 +18,7 @@ fi
 # Add the PHP 8.0 repo
 sudo apt install ca-certificates apt-transport-https software-properties-common -y
 sudo add-apt-repository ppa:ondrej/php
+sudo add-apt-repository ppa:ondrej/apache2
 
 # Perform updates
 sudo apt update && sudo apt upgrade -y
