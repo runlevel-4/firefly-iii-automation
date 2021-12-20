@@ -15,6 +15,10 @@ else
 	echo "Not Debian...continuing"
 fi
 
+# Add the PHP 8.0 repo
+sudo apt install  ca-certificates apt-transport-https software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+
 # Perform updates
 sudo apt update && sudo apt upgrade -y
 
