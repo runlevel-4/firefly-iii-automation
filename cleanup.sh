@@ -9,6 +9,6 @@ echo
 echo "[ DONE ]"
 echo
 echo "Removing web components"
-sudo apt autoremove --purge apache2 mysql-* mariadb-* php7.4-* -y
+sudo apt remove --purge apache2 mysql* mariadb* php* -y
 echo
 echo "[ DONE ]"
