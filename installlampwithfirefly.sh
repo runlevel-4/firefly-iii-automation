@@ -49,6 +49,8 @@ sudo cp $HOME/firefly-iii-automation/.env /var/www/html/firefly-iii/
 
 # Editing apache to allow modules
 sudo cp $HOME/firefly-iii-automation/apache2.conf /etc/apache2/
+sudo a2dismod php7.4
+sudo a2enmod php8.0
 sudo a2enmod rewrite
 
 #Setup Artisan
