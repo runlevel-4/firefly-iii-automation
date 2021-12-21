@@ -41,6 +41,8 @@ sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist f
 sudo chown -R www-data:www-data firefly-iii
 sudo chmod -R 775 firefly-iii/storage
 echo
+
+# Create database environment
 echo "Creating firefly database environment..."
 echo
 echo "Enter your MySQL root password.  If you don't have one, just hit Enter."
