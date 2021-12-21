@@ -45,7 +45,7 @@ echo "Creating firefly database environment..."
 echo
 echo "Enter your MySQL root password.  If you don't have one, just hit Enter."
 sudo mysql -u root -p < $HOME/firefly-iii-automation/mysql_setup.sql
-sudo cp $HOME/firefly-iii-automation/.env /var/www/html/firefly-iii/
+# sudo cp $HOME/firefly-iii-automation/.env /var/www/html/firefly-iii/
 
 # Editing apache to allow modules
 sudo cp $HOME/firefly-iii-automation/apache2.conf /etc/apache2/
