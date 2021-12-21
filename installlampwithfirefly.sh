@@ -16,52 +16,52 @@ else
 fi
 
 # Add the PHP 8.0 repo
-sudo apt install ca-certificates apt-transport-https software-properties-common -y > output.log
-sudo add-apt-repository ppa:ondrej/php >> output.log
-sudo add-apt-repository ppa:ondrej/apache2 >> output.log
+sudo apt install ca-certificates apt-transport-https software-properties-common -y
+sudo add-apt-repository ppa:ondrej/php
+sudo add-apt-repository ppa:ondrej/apache2
 
 # Perform updates
-sudo apt update && sudo apt upgrade -y >> output.log
+sudo apt update && sudo apt upgrade -y
 
 # Install web components
-sudo apt install apache2 mysql-common mariadb-server php8.0 php8.0-bcmath php8.0-intl php8.0-curl php8.0-zip php8.0-gd php8.0-xml php8.0-mbstring php8.0-ldap php8.0-mysql php-mysql -y >> output.log
+sudo apt install apache2 mysql-common mariadb-server php8.0 php8.0-bcmath php8.0-intl php8.0-curl php8.0-zip php8.0-gd php8.0-xml php8.0-mbstring php8.0-ldap php8.0-mysql php-mysql -y
 echo
 echo "Installing Composer (a friendly php helper that unpacks the php libraries contained within firefly and creates a firefly-iii project)..."
 echo
-sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer >> output.log
+sudo curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 echo
-cd /var/www/html >> output.log
+cd /var/www/html
 echo
 echo "If prompted, just hit Enter"
 echo
-sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 5.6.5 >> output.log
+sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 5.6.5
 # This will stop the  white screen issue
 # Changing firefly-iii folder permissions
-sudo chown -R www-data:www-data firefly-iii >> output.log
-sudo chmod -R 775 firefly-iii/storage >> output.log
+sudo chown -R www-data:www-data firefly-iii
+sudo chmod -R 775 firefly-iii/storage
 echo
 # Create database environment
 echo "Creating firefly database environment..."
 echo
 echo "Enter your MySQL root password.  If you don't have one, just hit Enter."
-sudo mysql -u root -p < $HOME/firefly-iii-automation/mysql_setup.sql >> output.log
-sudo cp $HOME/firefly-iii-automation/.env /var/www/html/firefly-iii/ >> output.log
+sudo mysql -u root -p < $HOME/firefly-iii-automation/mysql_setup.sql
+sudo cp $HOME/firefly-iii-automation/.env /var/www/html/firefly-iii/
 
 # Editing apache to allow modules
-sudo cp $HOME/firefly-iii-automation/apache2.conf /etc/apache2/ >> output.log
-sudo a2dismod php7.4 >> output.log
-sudo a2enmod php8.0 >> output.log
-sudo a2enmod rewrite >> output.log
+sudo cp $HOME/firefly-iii-automation/apache2.conf /etc/apache2/
+sudo a2dismod php7.4
+sudo a2enmod php8.0
+sudo a2enmod rewrite
 
 #Setup Artisan
-cd /var/www/html/firefly-iii >> output.log
-sudo php artisan migrate:refresh --seed >> output.log
-sudo php artisan firefly-iii:upgrade-database >> output.log
-sudo php artisan passport:install >> output.log
-sudo php artisan key:generate >> output.log
+cd /var/www/html/firefly-iii
+sudo php artisan migrate:refresh --seed
+sudo php artisan firefly-iii:upgrade-database
+sudo php artisan passport:install
+sudo php artisan key:generate
 
 # Restart apache web service
-sudo service apache2 restart >> output.log
+sudo service apache2 restart
 echo
 echo "All done..."
 echo
