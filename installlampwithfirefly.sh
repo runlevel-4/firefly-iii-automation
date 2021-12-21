@@ -24,7 +24,7 @@ sudo add-apt-repository ppa:ondrej/apache2
 sudo apt update && sudo apt upgrade -y
 
 # Install web components
-sudo apt install apache2 mysql-common mariadb-server php8.0 php8.0-bcmath php8.0-intl php8.0-curl php8.0-zip php8.0-gd php8.0-xml php8.0-mbstring php8.0-ldap php8.0-mysql php-mysql -y
+sudo apt install apache2 mysql-common mariadb-server php8.0 php8.0-common php8.0-bcmath php8.0-intl php8.0-curl php8.0-zip php8.0-gd php8.0-xml php8.0-mbstring php8.0-ldap php8.0-mysql php-mysql -y
 echo
 echo "Installing Composer (a friendly php helper that unpacks the php libraries contained within firefly and creates a firefly-iii project)..."
 echo
