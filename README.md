@@ -13,7 +13,7 @@ At the terminal:
 
 Post-Install (OPTIONAL):
 
-I would recommend changing the firefly mysql connection string defaults in **/var/www/html/firefly-iii/.env** file.
+I would recommend changing the firefly mysql connection string defaults in **/var/www/html/firefly-iii/.env** file if you plan on port forwarding this server to the internet.
 
   1.  Change the password for the mysql firefly user.
 
