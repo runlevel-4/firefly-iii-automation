@@ -66,3 +66,7 @@ echo
 echo "All done..."
 echo
 echo "You should now be able to visit http://<ipaddress>/firefly-iii/public"
+echo
+echo "Grab the IP Address from below"
+echo
+ip address
