@@ -36,7 +36,7 @@ cd /var/www/html
 echo
 echo "If prompted, just hit Enter"
 echo
-sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 5.6.5
+sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 5.6.16
 # This will stop the  white screen issue
 # Changing firefly-iii folder permissions
 sudo chown -R www-data:www-data firefly-iii
