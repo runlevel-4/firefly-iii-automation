@@ -26,7 +26,7 @@ fi
 sudo apt update && sudo apt upgrade -y
 
 # Install web components
-sudo apt install apache2 mysql-common mariadb-server php8.0 php8.0-common php8.0-bcmath php8.0-intl php8.0-curl php8.0-zip php8.0-gd php8.0-xml php8.0-mbstring php8.0-ldap php8.0-mysql php-mysql curl -y
+sudo apt install apache2 mysql-common mariadb-server php8.2 php8.2-common php8.2-bcmath php8.2-intl php8.2-curl php8.2-zip php8.2-gd php8.2-xml php8.2-mbstring php8.2-ldap php8.2-mysql php-mysql curl -y
 echo
 echo "Installing Composer (a friendly php helper that unpacks the php libraries contained within firefly and creates a firefly-iii project)..."
 echo
@@ -38,7 +38,7 @@ echo "If prompted, just hit Enter"
 echo
 echo "Unpacking firefly-iii project"
 echo
-sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 5.6.16
+sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 5.7.18
 # This will stop the  white screen issue
 # Changing firefly-iii folder permissions
 sudo chown -R www-data:www-data firefly-iii
@@ -46,7 +46,7 @@ sudo chmod -R 775 firefly-iii/storage
 echo
 echo "Unpacking data importer for firefly-iii"
 echo
-sudo composer create-project firefly-iii/data-importer --no-dev --prefer-dist data-importer 0.9.0
+sudo composer create-project firefly-iii/data-importer --no-dev --prefer-dist data-importer 1.0.0
 sudo chown -R www-data:www-data data-importer
 sudo chmod -R 775 data-importer/storage
 sudo cp firefly-iii/data-importer/.env.example .env
@@ -61,7 +61,7 @@ sudo cp $HOME/firefly-iii-automation/.env /var/www/html/firefly-iii/
 # Editing apache to allow modules
 sudo cp $HOME/firefly-iii-automation/apache2.conf /etc/apache2/
 sudo a2dismod php7.4
-sudo a2enmod php8.0
+sudo a2enmod php8.2
 sudo a2enmod rewrite
 
 #Setup Artisan
