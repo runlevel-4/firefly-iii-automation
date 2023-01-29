@@ -25,8 +25,12 @@ fi
 # Perform updates
 sudo apt update && sudo apt upgrade -y
 
+# Ensure en_US.UTF-8 locale is installed
+printf "en_US.UTF-8 UTF-8\n"  >>  /etc/locale.gen
+locale-gen
+
 # Install web components
-sudo apt install apache2 mysql-common mariadb-server php8.1 php8.1-common php8.1-bcmath php8.1-intl php8.1-curl php8.1-zip php8.1-gd php8.1-xml php8.1-mbstring php8.1-ldap php8.1-mysql php-mysql curl -y
+sudo apt install apache2 mysql-common mariadb-server php8.2 php8.2-common php8.2-bcmath php8.2-intl php8.2-curl php8.2-zip php8.2-gd php8.2-xml php8.2-mbstring php8.2-ldap php8.2-mysql php-mysql curl -y
 
 echo
 echo "Installing Composer (a friendly php helper that unpacks the php libraries contained within firefly and creates a firefly-iii project)..."
@@ -47,7 +51,7 @@ sudo chmod -R 775 firefly-iii/storage
 echo
 echo "Unpacking data importer for firefly-iii"
 echo
-sudo apt install apache2 mysql-common mariadb-server php8.2 php8.2-common php8.2-bcmath php8.2-intl php8.2-curl php8.2-zip php8.2-gd php8.2-xml php8.2-mbstring php8.2-ldap php8.2-mysql php-mysql curl -y
+
 sudo composer create-project firefly-iii/data-importer --no-dev --prefer-dist data-importer 1.0.2
 sudo chown -R www-data:www-data data-importer
 sudo chmod -R 775 data-importer/storage
