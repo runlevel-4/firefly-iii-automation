@@ -26,7 +26,7 @@ fi
 sudo apt update && sudo apt upgrade -y
 
 # Install web components
-sudo apt install apache2 mysql-common mariadb-server php8.0 php8.0-common php8.0-bcmath php8.0-intl php8.0-curl php8.0-zip php8.0-gd php8.0-xml php8.0-mbstring php8.0-ldap php8.0-mysql php-mysql curl -y
+sudo apt install apache2 mysql-common mariadb-server php8.1 php8.1-common php8.1-bcmath php8.1-intl php8.1-curl php8.1-zip php8.1-gd php8.1-xml php8.1-mbstring php8.1-ldap php8.1-mysql php-mysql curl -y
 echo
 echo "Installing Composer (a friendly php helper that unpacks the php libraries contained within firefly and creates a firefly-iii project)..."
 echo
