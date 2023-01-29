@@ -82,7 +82,8 @@ sudo service apache2 restart
 echo
 echo "All done..."
 echo
-echo "You should now be able to visit http://<ipaddress>/firefly-iii/public"
+echo "You should now be able to visit http://<ipaddress>/firefly-iii/public for the Firefly III interface and http://<ipaddress>/data-importer/public for the data importer."
+echo "Some configuration will be needed for the data importer. See https://docs.firefly-iii.org/data-importer/install/configure/"
 echo
 echo "Grab the IP Address from below"
 echo
