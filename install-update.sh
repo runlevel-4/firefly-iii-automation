@@ -3,6 +3,8 @@
 # Check if Firefly III is installed
 if [ -d /var/www/html/firefly-iii ]; then
   echo "An existing Firefly III installation was detected. Now proceeding to check for an update."
+  echo ""
+  echo ""
   # Update script based on https://gist.github.com/pedrom34/d1b8ab84e1e9ec7e8c6cbcc3cc51d663
   # Move into the Firefly III directory
   cd /var/www/html
@@ -41,10 +43,13 @@ if [ -d /var/www/html/firefly-iii ]; then
   chmod -R 775 firefly-iii/storage
   sleep 10
   service apache2 restart
-
+  echo ""
+  echo "Firefly III should now be updated. The old installation is at /var/www/html/firefly-iii-old and can be removed after you determine the update was successful."
 
 else
-    echo "Firefly III is not installed. Proceeding with installation..."
+    echo "Installing Firefly III"
+    echo ""
+    echo ""
 
 # Check if Debain is installed.  If it is, install the php repositories
 if grep -q Debian "/etc/os-release" ; then
