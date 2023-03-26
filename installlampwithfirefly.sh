@@ -1,5 +1,56 @@
 #!/bin/sh
 
+# Check if Firefly III is installed
+if [ -d /var/www/html/firefly-iii ]; then
+  echo "An existing Firefly III installation was detected. Now proceeding to check for an update."
+  echo ""
+  echo ""
+  # Update script based on https://gist.github.com/pedrom34/d1b8ab84e1e9ec7e8c6cbcc3cc51d663
+  # Move into the Firefly III directory
+  cd /var/www/html
+
+  # Remove old version of firefly-iii
+  rm -r firefly-iii-old
+
+  # Get latest version of firefly
+  latestversion=$(curl -s https://api.github.com/repos/firefly-iii/firefly-iii/releases/latest  | grep -oP '"tag_name": "\K(.*)(?=")')
+
+  # Install latest version
+  yes | composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii-updated $latestversion
+  cp firefly-iii/.env firefly-iii-updated/.env
+  cp -R firefly-iii/database firefly-iii-updated/database
+  cp firefly-iii/storage/upload/* firefly-iii-updated/storage/upload/
+  cp firefly-iii/storage/export/* firefly-iii-updated/storage/export/
+  cd firefly-iii-updated
+  rm -rf bootstrap/cache/*
+  php artisan cache:clear
+  php artisan migrate --seed
+  php artisan firefly-iii:upgrade-database
+  php artisan passport:install
+  php artisan cache:clear
+
+  # Serve next version, make sure rights are ok, restart apache2
+  cd ..
+  mv firefly-iii firefly-iii-old
+  mv firefly-iii-updated firefly-iii
+  sleep 10
+  cd firefly-iii
+  php artisan cache:clear
+  sleep 10
+  cd ..
+  chown -R www-data:www-data firefly-iii
+  sleep 10
+  chmod -R 775 firefly-iii/storage
+  sleep 10
+  service apache2 restart
+  echo ""
+  echo "Firefly III should now be updated. The old installation is at /var/www/html/firefly-iii-old and can be removed after you determine the update was successful."
+
+else
+    echo "Installing Firefly III"
+    echo ""
+    echo ""
+
 # Check if Debain is installed.  If it is, install the php repositories
 if grep -q Debian "/etc/os-release" ; then
 	echo "Debian is installed"
@@ -43,7 +94,7 @@ echo "If prompted, just hit Enter"
 echo
 echo "Unpacking firefly-iii project"
 echo
-sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 5.7.18
+sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 6.0.5
 # This will stop the  white screen issue
 # Changing firefly-iii folder permissions
 sudo chown -R www-data:www-data firefly-iii
@@ -67,7 +118,7 @@ sudo cp $HOME/firefly-iii-automation/.env /var/www/html/firefly-iii/
 # Editing apache to allow modules
 sudo cp $HOME/firefly-iii-automation/apache2.conf /etc/apache2/
 sudo a2dismod php7.4
-sudo a2enmod php8.0
+sudo a2enmod php8.2
 sudo a2enmod rewrite
 
 #Setup Artisan
@@ -88,3 +139,4 @@ echo
 echo "Grab the IP Address from below"
 echo
 ip address
+fi
