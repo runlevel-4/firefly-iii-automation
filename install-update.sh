@@ -1,30 +1,24 @@
-# WIP: integrating this script or something like it with the install script:
-# https://gist.github.com/pedrom34/d1b8ab84e1e9ec7e8c6cbcc3cc51d663
-
 #!/bin/sh
 
 # Check if Firefly III is installed
 if [ -d /var/www/html/firefly-iii ]; then
+  echo "An existing Firefly III installation was detected. Now proceeding to check for an update."
+  # Update script based on https://gist.github.com/pedrom34/d1b8ab84e1e9ec7e8c6cbcc3cc51d663
   # Move into the Firefly III directory
-  cd /var/www/html/firefly-iii
+  cd /var/www/html
 
-  # Get the latest version of Firefly III
+  # Remove old version of firefly-iii
+  rm -r firefly-iii-old
+
+  # Get latest version of firefly
   latestversion=$(curl -s https://api.github.com/repos/firefly-iii/firefly-iii/releases/latest  | grep -oP '"tag_name": "\K(.*)(?=")')
 
-  # Reinstall Firefly III with the latest version
-  sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii-updated $latestversion
-
-  # Copy necessary files to the new installation
-  cp .env firefly-iii-updated/.env
-  cp storage/upload/* firefly-iii-updated/storage/upload/
-  cp storage/export/* firefly-iii-updated/storage/export/
-
-  # If using SQLite, copy the database to the new installation
-  if [ -f database/firefly-iii.sqlite ]; then
-    cp database/firefly-iii.sqlite firefly-iii-updated/database/firefly-iii.sqlite
-  fi
-
-  # Perform upgrade commands
+  # Install latest version
+  yes | composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii-updated $latestversion
+  cp firefly-iii/.env firefly-iii-updated/.env
+  cp -R firefly-iii/database firefly-iii-updated/database
+  cp firefly-iii/storage/upload/* firefly-iii-updated/storage/upload/
+  cp firefly-iii/storage/export/* firefly-iii-updated/storage/export/
   cd firefly-iii-updated
   rm -rf bootstrap/cache/*
   php artisan cache:clear
@@ -32,18 +26,22 @@ if [ -d /var/www/html/firefly-iii ]; then
   php artisan firefly-iii:upgrade-database
   php artisan passport:install
   php artisan cache:clear
-  cd ..
 
-  # Move the new installation to replace the old installation
+  # Serve next version, make sure rights are ok, restart apache2
+  cd ..
   mv firefly-iii firefly-iii-old
   mv firefly-iii-updated firefly-iii
-
-  # Set appropriate permissions
+  sleep 10
+  cd firefly-iii
+  php artisan cache:clear
+  sleep 10
+  cd ..
   chown -R www-data:www-data firefly-iii
+  sleep 10
   chmod -R 775 firefly-iii/storage
+  sleep 10
+  service apache2 restart
 
-  # Restart Apache2
-  sudo systemctl restart apache2
 
 else
     echo "Firefly III is not installed. Proceeding with installation..."
