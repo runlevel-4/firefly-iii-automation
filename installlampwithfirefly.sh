@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Get latest version of firefly and data-importer
+fireflylatestversion=$(curl -s https://api.github.com/repos/firefly-iii/firefly-iii/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+importerlastestversion=$(curl -s https://api.github.com/repos/firefly-iii/data-importer/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+
 # Check if Firefly III is installed
 if [ -d /var/www/html/firefly-iii ]; then
   echo "An existing Firefly III installation was detected. Now proceeding to check for an update."
@@ -12,11 +16,8 @@ if [ -d /var/www/html/firefly-iii ]; then
   # Remove old version of firefly-iii
   rm -r firefly-iii-old
 
-  # Get latest version of firefly
-  latestversion=$(curl -s https://api.github.com/repos/firefly-iii/firefly-iii/releases/latest  | grep -oP '"tag_name": "\K(.*)(?=")')
-
   # Install latest version
-  yes | composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii-updated $latestversion
+  yes | composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii-updated $fireflylatestversion
   cp firefly-iii/.env firefly-iii-updated/.env
   cp -R firefly-iii/database firefly-iii-updated/database
   cp firefly-iii/storage/upload/* firefly-iii-updated/storage/upload/
@@ -95,9 +96,8 @@ else
   echo "Unpacking firefly-iii project"
   echo
 
-  sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 6.0.5
+  sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii $fireflylatestversion
 
-  sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 5.7.18
   # This will stop the white screen issue
   # Changing firefly-iii folder permissions
   sudo chown -R www-data:www-data firefly-iii
@@ -106,14 +106,7 @@ else
   echo "Unpacking data importer for firefly-iii"
   echo
 
-
-  sudo composer create-project firefly-iii/data-importer --no-dev --prefer-dist data-importer 1.0.2
-
-
-  sudo composer create-project firefly-iii/data-importer --no-dev --prefer-dist data-importer 1.0.2
-
-  sudo composer create-project firefly-iii/data-importer --no-dev --prefer-dist data-importer 1.0.0
-
+  sudo composer create-project firefly-iii/data-importer --no-dev --prefer-dist data-importer $importerlastestversion
 
   sudo chown -R www-data:www-data data-importer
   sudo chmod -R 775 data-importer/storage
