@@ -17,7 +17,7 @@ I would recommend changing the firefly mysql connection string defaults in **/va
 
   1.  Change the password for the mysql firefly user.
 
-        Login to your MySQL instance: `sudo mysql -u root -p` (if you don't have a mysql root passowrd, press _Enter_ although I recommend changing that too).
+        Login to your MySQL instance: `sudo mysql -u root -p` (if you don't have a mysql root password, press _Enter_ although I recommend changing that too).
         
         Change the firefly user's password: `ALTER USER 'firefly'@'localhost' IDENTIFIED BY 'newpassword';`
         

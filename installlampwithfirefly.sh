@@ -51,7 +51,7 @@ else
   echo ""
   echo ""
 
-  # Check if Debain is installed.  If it is, install the php repositories
+  # Check if Debian is installed. If it is, install the php repositories
   if grep -q Debian "/etc/os-release" ; then
     echo "Debian is installed"
     echo
@@ -98,7 +98,7 @@ else
   sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 6.0.5
 
   sudo composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii 5.7.18
-  # This will stop the  white screen issue
+  # This will stop the white screen issue
   # Changing firefly-iii folder permissions
   sudo chown -R www-data:www-data firefly-iii
   sudo chmod -R 775 firefly-iii/storage
