@@ -1,3 +1,7 @@
+# THIS SCRIPT IS RETIRED
+
+# official firefly-iii docker installation documentation can be found here:  https://docs.firefly-iii.org/how-to/firefly-iii/installation/docker/
+
 # firefly-iii install
 This script assumes you are running a flavor of Linux that includes apt package manager.
 
